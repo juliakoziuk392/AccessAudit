@@ -1,0 +1,24 @@
+{
+  "inactive_days": 90,
+  "admin_roles": ["admin"],
+  "role_model": {
+    "Support L1": { "BO": ["viewer"] },
+    "Support L2": { "BO": ["operator"] },
+    "Finance Analyst": { "BO": ["finance"] },
+    "Developer": { "GitLab": ["developer"] },
+    "DevOps": { "GitLab": ["maintainer"], "GCP-prod": ["roles/editor"] },
+    "Security Analyst": { "BO": ["auditor"], "GCP-prod": ["roles/iam.securityReviewer"] }
+  },
+  "sod_conflicts": [
+    {
+      "system": "BO",
+      "roles": ["operator", "refund_approver"],
+      "reason": "конфлікт: створює й погоджує повернення"
+    },
+    {
+      "system": "BO",
+      "roles": ["operator", "finance"],
+      "reason": "конфлікт: створює повернення й веде звірку"
+    }
+  ]
+}

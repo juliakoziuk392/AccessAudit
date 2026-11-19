@@ -1,0 +1,35 @@
+# Правила перевірки доступів — ЧЕРНЕТКА з усіма посадами.
+# Стандартні правила з policy.json + додано HR Specialist, Manager, Product Owner.
+# Рядки, що починаються з #, — коментарі.
+#
+# УВАГА: ролі для трьох нових посад визначено за тим, що в даних має більшість людей
+# (принцип мінімальних прав). Це припущення, а не політика компанії — перегляньте їх.
+
+[Ролі за посадою]
+# Посада: Система=роль1, роль2; Інша система=роль
+Support L1: BO=viewer
+Support L2: BO=operator
+Finance Analyst: BO=finance
+Developer: GitLab=developer
+DevOps: GitLab=maintainer; GCP-prod=roles/editor
+Security Analyst: BO=auditor; GCP-prod=roles/iam.securityReviewer
+
+# --- нові посади (чернетка) ---
+# Лише перегляд у BO. Усе інше (admin, finance, operator, refund_approver, auditor) буде позначено.
+HR Specialist: BO=viewer
+# Якщо менеджерам справді дозволено погоджувати повернення — допишіть: BO=viewer, refund_approver
+Manager: BO=viewer
+# Перегляд у BO; у GitLab лише читання (reporter) і гостьовий доступ (guest), без developer/owner.
+Product Owner: BO=viewer; GitLab=reporter, guest
+
+[Конфлікти ролей]
+# Система: роль1 + роль2 | пояснення
+BO: operator + refund_approver | конфлікт: створює й погоджує повернення
+BO: operator + finance | конфлікт: створює повернення й веде звірку
+
+[Admin-ролі]
+# Ролі, які мають видаватись лише тимчасово (через PAM), через кому
+admin
+
+[Неактивність, днів]
+90
